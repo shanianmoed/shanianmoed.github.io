@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Md Shanian Moed · Semiconductor Research</title>
+<meta name="description" content="Md Shanian Moed — semiconductor researcher working on DFT of 2D materials, nanoelectronics, CNTFETs, HEMTs, photovoltaic cells and COMSOL/TCAD device modeling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F4F6;
+    --surface: #FFFFFF;
+    --ink: #18202E;
+    --muted: #5A6475;
+    --rule: #D5DAE1;
+    --mo: #5B4B8A;      /* molybdenum violet: primary accent */
+    --s: #D9A400;       /* sulfur yellow: secondary accent */
+    --link: #4A3C7A;
+    --bond: #B9C1CC;
+    --display: "Sora", system-ui, sans-serif;
+    --body: "Newsreader", Georgia, serif;
+    --gutter: clamp(16px, 5vw, 64px);
+    --max: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10141C;
+      --surface: #171C26;
+      --ink: #E6E9EF;
+      --muted: #9AA3B2;
+      --rule: #2A3140;
+      --mo: #9D8BDB;
+      --s: #F2C230;
+      --link: #C3B6F2;
+      --bond: #3A4354;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.1875rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--mo); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 600; margin-bottom: 1.5rem; }
+  h3 { font-size: 1.15rem; font-weight: 600; }
+  p { margin: 0 0 1rem; max-width: 68ch; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .mark { font-family: var(--display); font-weight: 700; text-decoration: none; color: var(--ink); font-size: 1rem; }
+  .nav ul { list-style: none; display: flex; gap: clamp(14px, 3vw, 32px); margin: 0; padding: 0; }
+  .nav ul a { font-family: var(--display); font-size: 0.9rem; color: var(--muted); text-decoration: none; }
+  .nav ul a:hover { color: var(--ink); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: clamp(40px, 8vw, 96px) 0 clamp(48px, 7vw, 88px); }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6.4vw, 4.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin-bottom: 1.5rem;
+  }
+  .hero .lede { font-size: clamp(1.25rem, 2vw, 1.45rem); line-height: 1.45; margin-bottom: 1.25rem; }
+  .hero .affil { color: var(--muted); font-size: 1.05rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2rem; }
+  .btn {
+    font-family: var(--display); font-size: 0.95rem; font-weight: 500;
+    display: inline-block; padding: 12px 20px; border-radius: 999px;
+    text-decoration: none; border: 1.5px solid var(--mo);
+  }
+  .btn.primary { background: var(--mo); color: var(--bg); }
+  .btn.ghost { color: var(--mo); }
+  .btn:hover { text-decoration: none; filter: brightness(1.08); }
+
+  .lattice { margin: 0; }
+  .lattice canvas {
+    display: block; width: 100%; height: clamp(300px, 42vw, 500px);
+    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+            mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    touch-action: pan-y;
+  }
+  .lattice figcaption { font-size: 0.95rem; color: var(--muted); text-align: center; font-style: italic; margin-top: 4px; }
+  .lattice figcaption i { font-style: normal; display: inline-block; width: 9px; height: 9px; border-radius: 50%; vertical-align: middle; margin: 0 4px 2px; }
+
+  /* ---------- Sections ---------- */
+  section.block { padding: clamp(56px, 8vw, 96px) 0; border-top: 1px solid var(--rule); }
+
+  .about { display: grid; grid-template-columns: 200px 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .portrait {
+    width: 180px; aspect-ratio: 1; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--rule);
+    display: grid; place-items: center; overflow: hidden;
+    font-family: var(--display); font-weight: 600; font-size: 2.6rem; color: var(--mo);
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Research areas */
+  .areas { list-style: none; margin: 0; padding: 0; }
+  .areas li {
+    display: grid; grid-template-columns: 56px minmax(180px, 300px) 1fr; gap: 8px 28px;
+    padding: 28px 0; border-top: 1px solid var(--rule);
+  }
+  .areas li:last-child { border-bottom: 1px solid var(--rule); }
+  .areas svg { width: 44px; height: 44px; stroke: var(--mo); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .areas svg .s { fill: var(--s); stroke: none; }
+  .areas h3 { padding-top: 6px; }
+  .areas p { margin: 0; padding-top: 2px; color: var(--muted); }
+  .areas p strong { color: var(--ink); font-weight: 500; }
+
+  /* Tools */
+  .tools { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .tools li {
+    font-family: var(--display); font-size: 0.92rem;
+    padding: 8px 14px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--rule);
+  }
+
+  /* Publications */
+  .pubs { list-style: none; margin: 0; padding: 0; }
+  .pubs li { padding: 22px 0; border-top: 1px solid var(--rule); max-width: 820px; }
+  .pubs li:last-child { border-bottom: 1px solid var(--rule); }
+  .pubs .title { font-family: var(--display); font-weight: 600; font-size: 1.08rem; line-height: 1.35; display: block; margin-bottom: 4px; }
+  .pubs .authors { color: var(--muted); }
+  .pubs .authors b { color: var(--ink); font-weight: 500; }
+  .pubs .venue { font-style: italic; }
+  .pubs .links { margin-top: 6px; display: flex; gap: 16px; font-family: var(--display); font-size: 0.88rem; }
+  .pubs .year { font-family: var(--display); font-size: 0.88rem; color: var(--s); font-weight: 600; float: right; margin-left: 16px; }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .email { font-family: var(--display); font-size: clamp(1.2rem, 2.6vw, 1.7rem); font-weight: 500; word-break: break-all; }
+  .profiles { list-style: none; margin: 0; padding: 0; }
+  .profiles li { border-top: 1px solid var(--rule); }
+  .profiles li:last-child { border-bottom: 1px solid var(--rule); }
+  .profiles a { display: flex; justify-content: space-between; padding: 14px 0; font-family: var(--display); font-size: 1rem; text-decoration: none; color: var(--ink); }
+  .profiles a span { color: var(--muted); font-size: 0.9rem; }
+  .profiles a:hover span { color: var(--mo); }
+
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 0.95rem; border-top: 1px solid var(--rule); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .lattice { order: -1; }
+    .lattice canvas { height: 260px; }
+    .about, .contact-grid { grid-template-columns: 1fr; }
+    .portrait { width: 132px; font-size: 2rem; }
+    .areas li { grid-template-columns: 44px 1fr; }
+    .areas svg { width: 36px; height: 36px; }
+    .areas p { grid-column: 2; }
+  }
+  @media (max-width: 420px) {
+    .nav ul li.optional { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top">Shanian Moed</a>
+    <ul>
+      <li class="optional"><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Md Shanian Moed</h1>
+        <p class="lede">I study how charge moves through atom-thin materials and nanoscale devices, from first-principles calculations to full device simulation.</p>
+        <!-- EDIT: your position and institution -->
+        <p class="affil">Semiconductor researcher, [Department], [University / Institute], Bangladesh</p>
+        <div class="actions">
+          <a class="btn primary" href="#research">See my research</a>
+          <!-- EDIT: put your CV in the repo as cv.pdf, or change this link -->
+          <a class="btn ghost" href="cv.pdf">Download CV</a>
+        </div>
+      </div>
+
+      <figure class="lattice" aria-hidden="false">
+        <canvas id="lattice" role="img" aria-label="Interactive top view of a monolayer MoS2 honeycomb lattice"></canvas>
+        <figcaption>Monolayer MoS<sub>2</sub>, top view: <i style="background:var(--mo)"></i>Mo <i style="background:var(--s)"></i>S. Move over it to excite the lattice.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="block" id="about">
+    <div class="wrap about">
+      <!-- EDIT: to use a photo, put photo.jpg in the repo and replace "SM" with: <img src="photo.jpg" alt="Md Shanian Moed"> -->
+      <div class="portrait">SM</div>
+      <div>
+        <h2>About</h2>
+        <!-- EDIT: rewrite these two paragraphs in your own words -->
+        <p>My work sits where materials physics meets device engineering. I use density functional theory to understand the electronic structure of two-dimensional materials, then carry those insights into device-level models of transistors and solar cells built in COMSOL and TCAD.</p>
+        <p>I am especially interested in how strain, defects, stacking and interfaces change band structure and transport, and in what those changes mean for the next generation of low-power nanoelectronics and efficient photovoltaics.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESEARCH ================= -->
+  <section class="block" id="research">
+    <div class="wrap">
+      <h2>Research areas</h2>
+      <ul class="areas">
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="22,6 36,14 36,30 22,38 8,30 8,14"/><circle class="s" cx="22" cy="6" r="3"/><circle class="s" cx="36" cy="30" r="3"/><circle class="s" cx="8" cy="30" r="3"/></svg>
+          <h3>DFT of 2D materials</h3>
+          <p>First-principles study of monolayers and heterostructures: <strong>band structure, density of states, effective mass</strong>, and how strain, doping and defects tune them.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M4 30 C14 30 16 12 22 12 S30 30 40 30"/><path d="M4 36 H40" stroke-dasharray="2 3"/><path d="M4 8 C14 8 16 22 22 22 S30 8 40 8" opacity=".5"/></svg>
+          <h3>Nanoelectronics</h3>
+          <p>Quantum and ballistic transport in nanoscale devices, and how material choice sets the limits of <strong>scaling, switching and power</strong>.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="18" width="32" height="8" rx="4"/><path d="M12 18v8M18 18v8M24 18v8M30 18v8" opacity=".45"/><path d="M14 10h16M22 10v8M6 34h8M30 34h8"/></svg>
+          <h3>CNTFETs</h3>
+          <p>Carbon nanotube field-effect transistors: <strong>chirality-dependent bandgap</strong>, contact effects, and performance against silicon at short channel lengths.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="10" width="32" height="8"/><rect x="6" y="18" width="32" height="16"/><path d="M6 19.5h32" stroke-dasharray="3 2"/><circle class="s" cx="14" cy="19.5" r="1.6"/><circle class="s" cx="22" cy="19.5" r="1.6"/><circle class="s" cx="30" cy="19.5" r="1.6"/></svg>
+          <h3>HEMTs</h3>
+          <p>High-electron-mobility transistors and the <strong>two-dimensional electron gas</strong> at heterointerfaces, for high-frequency and high-power electronics.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true"><circle class="s" cx="22" cy="9" r="4"/><path d="M22 1v2M14 9h-2M32 9h-2" /><rect x="6" y="20" width="32" height="18"/><path d="M6 29h32M17 20v18M28 20v18"/></svg>
+          <h3>Photovoltaic cells</h3>
+          <p>Absorber and heterojunction design, <strong>band alignment</strong> and loss mechanisms, with simulated J–V behaviour and efficiency.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M6 38 L22 6 L38 38 Z"/><path d="M14 22 L30 22 M10 30 L34 30 M14 22 L22 38 M30 22 L22 38 M22 6 L14 22 M22 6 L30 22 M10 30 L14 22 M34 30 L30 22" opacity=".55"/></svg>
+          <h3>COMSOL &amp; TCAD modeling</h3>
+          <p>Device and multiphysics simulation: <strong>drift–diffusion, Poisson–Schrödinger</strong>, thermal and optical coupling, from structure to characteristics.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= TOOLS ================= -->
+  <section class="block" id="tools">
+    <div class="wrap">
+      <h2>Tools and methods</h2>
+      <!-- EDIT: keep only the tools you actually use, add any missing ones -->
+      <ul class="tools">
+        <li>Quantum ESPRESSO</li>
+        <li>VASP</li>
+        <li>COMSOL Multiphysics</li>
+        <li>Silvaco TCAD</li>
+        <li>Sentaurus TCAD</li>
+        <li>VESTA</li>
+        <li>Python</li>
+        <li>MATLAB</li>
+        <li>Origin</li>
+        <li>LaTeX</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= PUBLICATIONS ================= -->
+  <section class="block" id="publications">
+    <div class="wrap">
+      <h2>Publications</h2>
+      <!-- EDIT: copy one <li>...</li> block per paper. Your name goes in <b>. -->
+      <ul class="pubs">
+        <li>
+          <span class="year">2026</span>
+          <span class="title">Title of your paper goes here</span>
+          <span class="authors"><b>M. S. Moed</b>, Co-author A, Co-author B.</span>
+          <span class="venue">Journal or conference name</span>, vol. X, pp. XX–XX.
+          <div class="links"><a href="#">DOI</a><a href="#">PDF</a></div>
+        </li>
+        <li>
+          <span class="year">2025</span>
+          <span class="title">Title of another paper or thesis</span>
+          <span class="authors"><b>M. S. Moed</b>, Supervisor name.</span>
+          <span class="venue">Venue</span>.
+          <div class="links"><a href="#">DOI</a><a href="#">Preprint</a></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="block" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Contact</h2>
+        <p>Open to collaborations, research positions and graduate study opportunities in semiconductor materials and devices.</p>
+        <!-- EDIT: your email (both places) -->
+        <a class="email" href="mailto:you@example.com">you@example.com</a>
+      </div>
+      <!-- EDIT: replace each # with your profile link; delete rows you don't need -->
+      <ul class="profiles">
+        <li><a href="#">Google Scholar <span>Citations</span></a></li>
+        <li><a href="#">ORCID <span>0000-0000-0000-0000</span></a></li>
+        <li><a href="#">ResearchGate <span>Papers and preprints</span></a></li>
+        <li><a href="#">GitHub <span>Code and scripts</span></a></li>
+        <li><a href="#">LinkedIn <span>Profile</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr">2026</span> Md Shanian Moed</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* Interactive MoS2 honeycomb lattice */
+(function () {
+  const canvas = document.getElementById('lattice');
+  const ctx = canvas.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let atoms = [], bonds = [], W = 0, H = 0, dpr = 1;
+  let mouse = { x: -9999, y: -9999 };
+  let t0 = performance.now(), running = false;
+  const INTRO = 1100, R = 120;
+
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  let colors = {};
+  function readColors() { colors = { mo: css('--mo'), s: css('--s'), bond: css('--bond') }; }
+
+  function build() {
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const a = W < 500 ? 22 : 28;               // bond length in px
+    const ax = Math.sqrt(3) * a, ay = 1.5 * a;
+    atoms = [];
+    const rows = Math.ceil(H / ay) + 3, cols = Math.ceil(W / ax) + 3;
+    const cx = W / 2, cy = H / 2;
+    for (let r = -1; r < rows; r++) {
+      for (let c = -1; c < cols; c++) {
+        const x = c * ax + (r % 2 ? ax / 2 : 0) - ax / 2;
+        const y = r * ay - ay / 2;
+        atoms.push({ x, y, type: 0 });          // Mo sublattice
+        atoms.push({ x, y: y + a, type: 1 });   // S sublattice
+      }
+    }
+    atoms.forEach(p => { p.d = Math.hypot(p.x - cx, p.y - cy); });
+    const maxD = Math.max(...atoms.map(p => p.d)) || 1;
+    atoms.forEach(p => { p.delay = (p.d / maxD) * INTRO * 0.7; });
+
+    bonds = [];
+    for (let i = 0; i < atoms.length; i++) {
+      for (let j = i + 1; j < atoms.length; j++) {
+        if (atoms[i].type === atoms[j].type) continue;
+        const d = Math.hypot(atoms[i].x - atoms[j].x, atoms[i].y - atoms[j].y);
+        if (Math.abs(d - a) < 1) bonds.push([atoms[i], atoms[j]]);
+      }
+    }
+  }
+
+  function excite(p) {
+    const d = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+    return d < R ? Math.pow(1 - d / R, 2) : 0;
+  }
+
+  function draw(now) {
+    const el = reduce ? Infinity : now - t0;
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.lineWidth = 1.2;
+    for (const [p, q] of bonds) {
+      const v = Math.min(appear(p, el), appear(q, el));
+      if (!v) continue;
+      const e = Math.max(excite(p), excite(q));
+      ctx.strokeStyle = e > 0.02 ? colors.mo : colors.bond;
+      ctx.globalAlpha = v * (e > 0.02 ? 0.25 + e * 0.75 : 1);
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+    }
+    for (const p of atoms) {
+      const v = appear(p, el);
+      if (!v) continue;
+      const e = excite(p);
+      const base = p.type === 0 ? 4.2 : 3;
+      ctx.globalAlpha = v;
+      ctx.fillStyle = p.type === 0 ? colors.mo : colors.s;
+      ctx.beginPath(); ctx.arc(p.x, p.y, base * (0.6 + 0.4 * v) * (1 + e * 1.2), 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    return el < INTRO;
+  }
+
+  function appear(p, el) {
+    if (el === Infinity) return 1;
+    const k = (el - p.delay) / 350;
+    return k <= 0 ? 0 : k >= 1 ? 1 : 1 - Math.pow(1 - k, 3);
+  }
+
+  function loop(now) {
+    const intro = draw(now);
+    if (intro || mouse.active) requestAnimationFrame(loop); else running = false;
+  }
+  function kick() { if (!running) { running = true; requestAnimationFrame(loop); } }
+
+  canvas.addEventListener('pointermove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true; kick();
+  });
+  canvas.addEventListener('pointerleave', () => {
+    mouse.x = mouse.y = -9999; mouse.active = false; kick();
+  });
+
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { build(); kick(); }, 150); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); kick(); });
+
+  readColors(); build(); t0 = performance.now(); kick();
+})();
+</script>
+</body>
+</html>
