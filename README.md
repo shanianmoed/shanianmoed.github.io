@@ -1,26 +1,32 @@
-# Md Shanian Moed — research website
+# Md Shanian Moed: research website
 
-A single-page research portfolio. Everything (design, text, the interactive MoS₂ lattice) lives in `index.html`.
+A static academic site for GitHub Pages. All text lives in **`data.js`**, so you never need to touch the HTML.
 
-## Put it online with GitHub Pages
+## Files
 
-1. Sign in to GitHub and create a new **public** repository.
-   - Name it `YOUR-USERNAME.github.io` to get the address `https://YOUR-USERNAME.github.io`.
-   - Any other name (e.g. `research`) gives `https://YOUR-USERNAME.github.io/research`.
-2. In the new repo, click **Add file → Upload files**, drag in `index.html` (plus `cv.pdf` and `photo.jpg` if you have them), then **Commit changes**.
-3. Go to **Settings → Pages**. Under *Build and deployment*, choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
-4. Wait 1–2 minutes and open the address shown at the top of the Pages settings.
+| File | What it is |
+|---|---|
+| `index.html` | Page skeleton |
+| `style.css` | Design (dark/light themes) |
+| `main.js` | Builds the page from `data.js` |
+| `data.js` | **Your content: edit this one** |
+| `me.jpg` | Your square photo (add it yourself; initials show until you do) |
+| `cv.pdf` | Your CV (add it yourself) |
 
-## Fill in your details
+## Publish
 
-Open `index.html` (on GitHub, click the file, then the pencil icon) and search for `EDIT`. Each marked spot tells you what to change:
+1. Create a public repo named **`shanianaca.github.io`**.
+2. Click **uploading an existing file**, drag in all the files above, then **Commit changes**.
+3. **Settings → Pages →** Deploy from a branch, **main**, **/ (root)**, then **Save**.
+4. The site appears at https://shanianaca.github.io after a minute or two.
 
-- Department and university under your name
-- CV link (upload `cv.pdf` to the repo)
-- Profile photo (upload `photo.jpg`, then swap the "SM" initials for the `<img>` line in the comment)
-- About paragraphs
-- Tools list: keep only what you actually use
-- Publications: copy one `<li>…</li>` block per paper
-- Email and profile links (Google Scholar, ORCID, ResearchGate, GitHub, LinkedIn)
+## Edit your content
 
-Every commit to `main` updates the live site automatically.
+On GitHub, open `data.js`, click the pencil icon, edit, then **Commit changes**. The live site updates within a minute.
+
+- Replace every line marked **EXAMPLE** with your own details, or delete it.
+- **Publications:** copy one `{ ... },` block per paper. `status` can be `published`, `review`, `accepted` or `preprint`. `areas` tags it with research areas, which drive the colours and filters.
+- **Links:** paste URLs for Scholar, ORCID and so on. Empty `""` hides that button.
+- **Citations chart:** fill `citations` with `{ year: 2025, count: 4 }` entries. While it is empty, the MoS₂ lattice shows instead.
+- Lists set to `[]` (teaching, awards and so on) hide their whole section.
+- If the page goes blank after an edit, a comma or quote is usually missing near the line you changed.
