@@ -205,12 +205,12 @@
   }
   $("#profiles").innerHTML = prof;
 
-  /* ---------- side panel: citations chart or lattice ---------- */
+  /* ---------- side panel: citations chart + research visuals ---------- */
   const panel = $("#sidePanel");
   const cites = (S.citations || []).filter((c) => c && c.year);
   if (cites.length) {
     const max = Math.max(...cites.map((c) => c.count), 1);
-    const W = 400, H = 190, pad = 28, bw = Math.min(46, (W - pad * 2) / cites.length * 0.55);
+    const W = 400, H = 130, pad = 28, bw = Math.min(46, (W - pad * 2) / cites.length * 0.55);
     const step = (W - pad * 2) / cites.length;
     const bars = cites.map((c, i) => {
       const h = (c.count / max) * (H - 50);
@@ -220,16 +220,72 @@
               <text x="${x + bw / 2}" y="${H - 6}" text-anchor="middle" font-size="11" fill="var(--muted)">${c.year}</text>`;
     }).join("");
     const total = cites.reduce((s, c) => s + c.count, 0);
-    panel.innerHTML = `<div class="panel-head"><h3>Citations per year</h3><span>Google Scholar</span></div>
+    panel.innerHTML = `<div class="panel-head"><h3>Citations per year</h3><span>${total} total · Google Scholar</span></div>
       <div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Citations per year bar chart">
-        <line x1="${pad}" x2="${W - pad}" y1="${H - 24}" y2="${H - 24}" stroke="var(--rule)"/>${bars}</svg></div>
-      <div class="panel-foot">${total} citations in total</div>`;
+        <line x1="${pad}" x2="${W - pad}" y1="${H - 24}" y2="${H - 24}" stroke="var(--rule)"/>${bars}</svg></div>`;
   } else {
-    panel.innerHTML = `<div class="panel-head"><h3>Monolayer MoS₂, top view</h3>
+    panel.hidden = true;
+  }
+
+  // Two visual tiles under the chart: MoS2 lattice and CNTFET
+  const V = S.visuals || {};
+  const tiles = document.createElement("div");
+  tiles.className = "visuals";
+  const cnt = V.cntfet || {};
+  const cntBody = has(cnt.image)
+    ? `<a href="${esc(cnt.image)}" target="_blank" rel="noopener"><img src="${esc(cnt.image)}" alt="${esc(cnt.caption || "COMSOL CNTFET simulation")}"></a>`
+    : cntfetSVG();
+  tiles.innerHTML = `
+    <figure class="tile">
+      <div class="tile-head"><h3>MoS₂ monolayer</h3>
         <span class="legend"><span><i style="background:var(--violet)"></i>Mo</span><span><i style="background:var(--amber)"></i>S</span></span></div>
       <canvas id="lattice" role="img" aria-label="Interactive honeycomb lattice of monolayer MoS2"></canvas>
-      <div class="panel-foot">Move over the lattice to excite it. This is the material family at the centre of my DFT work.</div>`;
-    lattice($("#lattice"));
+      <figcaption>${esc((V.mos2 && V.mos2.caption) || "Top view. Move over it to excite the lattice.")}</figcaption>
+    </figure>
+    <figure class="tile">
+      <div class="tile-head"><h3>${esc(cnt.title || "CNTFET")}</h3><span>${has(cnt.image) ? "Simulation" : "Potential (V)"}</span></div>
+      <div class="tile-media">${cntBody}</div>
+      <figcaption>${esc(cnt.caption || "Gate-all-around CNTFET with electric potential along the channel.")}</figcaption>
+    </figure>`;
+  panel.after(tiles);
+  lattice($("#lattice"));
+
+  function cntfetSVG() {
+    // COMSOL-style rainbow colour map for the potential along the tube
+    const stops = ["#1f2bd1", "#1b8fe8", "#20d4c9", "#6be35a", "#f2e33a", "#f59a23", "#e0321f"];
+    const grad = stops.map((c, i) => `<stop offset="${(i / (stops.length - 1)) * 100}%" stop-color="${c}"/>`).join("");
+    let hex = "";
+    for (let x = 64; x < 236; x += 10) hex += `<path d="M${x} 82 l5 6 l-5 6 M${x + 5} 88 h5" />`;
+    return `<svg viewBox="6 24 290 126" role="img" aria-label="Illustration of a gate-all-around carbon nanotube field-effect transistor coloured by electric potential">
+      <defs>
+        <linearGradient id="pot" x1="0" x2="1">${grad}</linearGradient>
+        <linearGradient id="tubeShade" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+          <stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+        <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#c9ced6"/><stop offset="1" stop-color="#7c8592"/></linearGradient>
+        <linearGradient id="gateM" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#e7c98a"/><stop offset="1" stop-color="#a57f35"/></linearGradient>
+      </defs>
+      <rect x="8" y="128" width="262" height="18" rx="2" fill="var(--surface-2)" stroke="var(--rule)"/>
+      <text x="139" y="142" text-anchor="middle" font-size="12" fill="var(--muted)">SiO₂</text>
+      <rect x="18" y="58" width="46" height="70" rx="3" fill="url(#metal)"/>
+      <rect x="214" y="58" width="46" height="70" rx="3" fill="url(#metal)"/>
+      <text x="41" y="52" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)">S</text>
+      <text x="237" y="52" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)">D</text>
+      <rect x="60" y="78" width="158" height="20" rx="10" fill="url(#pot)"/>
+      <g stroke="#fff" stroke-opacity=".28" stroke-width=".7" fill="none">${hex}</g>
+      <rect x="60" y="78" width="158" height="20" rx="10" fill="url(#tubeShade)"/>
+      <rect x="104" y="68" width="70" height="40" rx="12" fill="#9fd3ff" fill-opacity=".18" stroke="#9fd3ff" stroke-opacity=".5"/>
+      <rect x="110" y="60" width="58" height="56" rx="14" fill="url(#gateM)" fill-opacity=".55" stroke="#e7c98a" stroke-opacity=".9"/>
+      <rect x="110" y="60" width="58" height="56" rx="14" fill="none" stroke="#fff" stroke-opacity=".25"/>
+      <text x="139" y="40" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)">G</text>
+      <line x1="139" y1="45" x2="139" y2="58" stroke="var(--faint)" stroke-dasharray="2 2"/>
+      <rect x="278" y="40" width="8" height="90" rx="2" fill="url(#potV)"/>
+      <defs><linearGradient id="potV" x1="0" x2="0" y1="1" y2="0">${grad}</linearGradient></defs>
+      <text x="282" y="36" text-anchor="middle" font-size="11" fill="var(--muted)">0.5</text>
+      <text x="282" y="141" text-anchor="middle" font-size="11" fill="var(--muted)">0</text>
+    </svg>`;
   }
 
   /* ---------- theme toggle ---------- */
@@ -279,7 +335,7 @@
       const r = canvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
       W = r.width; H = r.height; canvas.width = W * dpr; canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const a = 20, ax = Math.sqrt(3) * a, ay = 1.5 * a;
+      const a = 14, ax = Math.sqrt(3) * a, ay = 1.5 * a;
       atoms = [];
       for (let row = -1; row < H / ay + 2; row++)
         for (let c = -1; c < W / ax + 2; c++) {
@@ -313,7 +369,7 @@
         const e = ex(p);
         ctx.globalAlpha = v * (0.75 + e * 0.25);
         ctx.fillStyle = p.t ? colors.s : colors.mo;
-        ctx.beginPath(); ctx.arc(p.x, p.y, (p.t ? 2.6 : 3.8) * (0.6 + 0.4 * v) * (1 + e * 1.1), 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, (p.t ? 2 : 2.9) * (0.6 + 0.4 * v) * (1 + e * 1.1), 0, Math.PI * 2); ctx.fill();
       }
       ctx.globalAlpha = 1;
       return el < INTRO;

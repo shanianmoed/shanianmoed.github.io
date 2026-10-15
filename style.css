@@ -177,7 +177,7 @@ p { margin: 0; }
 .legend { display: flex; gap: 14px; align-items: center; }
 .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
 .chart { padding: 8px 18px 10px; }
-.chart svg { width: 100%; height: 190px; display: block; }
+.chart svg { width: 100%; height: 135px; display: block; }
 
 /* ============ Stats ============ */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); margin-top: 8px; }
@@ -320,3 +320,18 @@ p { margin: 0; }
   .cards { grid-template-columns: 1fr; }
   .brand-sub { display: none; }
 }
+
+/* Research visual tiles under the citations chart */
+.visuals { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.tile { margin: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+.tile-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; padding: 8px 10px 2px; }
+.tile-head h3 { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+.tile-head > span { font-size: 0.66rem; color: var(--muted); white-space: nowrap; }
+.tile .legend { gap: 6px; font-size: 0.66rem; color: var(--muted); }
+.tile canvas { display: block; width: 100%; height: 100px; cursor: crosshair; touch-action: pan-y; }
+.tile-media { height: 100px; display: grid; place-items: center; padding: 2px 6px; }
+.tile-media svg { width: 100%; height: 100%; }
+.tile-media a { display: block; width: 100%; height: 100%; }
+.tile-media img { width: 100%; height: 100%; object-fit: contain; }
+.tile figcaption { display: none; border-top: 1px solid var(--rule); padding: 9px 14px; font-size: 0.75rem; color: var(--muted); margin-top: auto; }
+@media (max-width: 480px) { .tile canvas, .tile-media { height: 90px; } }
