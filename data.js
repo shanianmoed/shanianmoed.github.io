@@ -30,7 +30,7 @@ window.SITE = {
     scholar: "https://scholar.google.com/citations?user=WgNzwxEAAAAJ&hl=en",
     orcid: "",
     researchgate: "",
-    github: "https://github.com/shanianaca",
+    github: "https://github.com/shanianmoed",
     linkedin: ""
   },
 

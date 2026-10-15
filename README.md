@@ -12,13 +12,14 @@ A static academic site for GitHub Pages. All text lives in **`data.js`**, so you
 | `data.js` | **Your content: edit this one** |
 | `me.jpg` | Your square photo (add it yourself; initials show until you do) |
 | `cv.pdf` | Your CV (add it yourself) |
+| `robots.txt`, `sitemap.xml` | Help Google find and index the site |
 
 ## Publish
 
-1. Create a public repo named **`shanianaca.github.io`**.
+1. Create a public repo named **`shanianmoed.github.io`**.
 2. Click **uploading an existing file**, drag in all the files above, then **Commit changes**.
 3. **Settings → Pages →** Deploy from a branch, **main**, **/ (root)**, then **Save**.
-4. The site appears at https://shanianaca.github.io after a minute or two.
+4. The site appears at https://shanianmoed.github.io after a minute or two.
 
 ## Edit your content
 
