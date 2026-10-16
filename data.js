@@ -8,7 +8,7 @@ window.SITE = {
   /* ---------------- Basic info ---------------- */
   name: "Md Shanian Moed",
   shortTitle: "Lecturer, EEE · AUST",
-  role: "Lecturer, Department of Electrical and Electronic Engineering",
+  role: "Lecturer, Dept. of EEE",
   affiliation: "Ahsanullah University of Science and Technology",
   affiliationUrl: "https://www.aust.edu",
   location: "Dhaka, Bangladesh",
@@ -16,10 +16,8 @@ window.SITE = {
 
   tagline: "I model materials one atom thick, and the devices built from them.",
   summary:
-    "My published work covers three-dimensional coupled optical–electrical modeling of lead-free " +
-    "Cs₂AgBiBr₆ double perovskite solar cells in COMSOL Multiphysics, and genetic-algorithm " +
-    "optimization for smart-grid demand management and EV charging. I am now extending this toward " +
-    "first-principles DFT of two-dimensional materials and device simulation of CNTFETs and GaN HEMTs.",
+    "COMSOL/TCAD device modeling, perovskite photovoltaics and plasmonic biosensors. " +
+    "Moving into DFT of 2D materials, CNTFETs and GaN HEMTs.",
 
   // Green status pill under the summary. Set to "" to hide it.
   status: "Seeking funded PhD opportunities",
@@ -37,10 +35,10 @@ window.SITE = {
   /* ---------------- Numbers strip ----------------
      "auto" values are counted from the lists below. */
   stats: [
-    { value: "auto:published", label: "Peer-reviewed papers" },
-    { value: "9",              label: "Citations on Google Scholar" },
+    { value: "auto:published", label: "papers" },
+    { value: "9",              label: "citations" },
     { value: "2",              label: "h-index" },
-    { value: "auto:areas",     label: "Research interests" }
+    { value: "auto:areas",     label: "research interests" }
   ],
 
   /* Citations per year (Google Scholar). Update now and then. */
@@ -50,70 +48,44 @@ window.SITE = {
     { year: 2025, count: 4 },
     { year: 2026, count: 3 }
   ],
-  metricsNote: "Google Scholar h-index 2 · Figures as of October 2026",
+  metricsNote: "Scholar · Oct 2026",
 
   /* ---------------- Research areas ---------------- */
   areas: [
     {
       id: "pv", color: "green",
       title: "Photovoltaic cells",
-      text: "Lead-free double perovskites such as Cs₂AgBiBr₆ are stable and non-toxic but held back by " +
-            "weak absorption and interface losses. I build 3D coupled optical–electrical models to find " +
-            "the device geometry and layer stack that recover that efficiency.",
-      topics: ["Lead-free double perovskite cells", "3D optical–electrical coupling",
-               "Band alignment and interface losses", "Device-level optimization"]
+      topics: ["lead-free perovskites", "3D opto-electrical", "interface losses"]
     },
     {
       id: "tcad", color: "rose",
       title: "COMSOL and TCAD modeling",
-      text: "The bridge between materials and devices. I build finite-element multiphysics models that " +
-            "couple wave optics, drift–diffusion and heat transfer, from structure to J–V and efficiency.",
-      topics: ["Finite-element multiphysics", "Wave optics and carrier transport",
-               "Opto-electrical and thermal coupling", "Mesh and convergence studies"]
+      topics: ["FEM multiphysics", "wave optics", "drift–diffusion", "thermal"]
     },
     {
       id: "dft", color: "violet",
       title: "DFT of 2D materials",
-      text: "Graphene-family sheets and transition-metal dichalcogenides such as MoS₂ have band gaps " +
-            "that shift with strain, stacking and defects. I use first-principles calculations to map " +
-            "those shifts and find the configurations worth building a device around.",
-      topics: ["Band structure and density of states", "Strain and defect engineering",
-               "Van der Waals heterostructures", "Effective mass and mobility"]
+      topics: ["band structure", "strain & defects", "vdW heterostructures"]
     },
     {
       id: "nano", color: "cyan",
       title: "Nanoelectronics and CNTFETs",
-      text: "Carbon-nanotube field-effect transistors switch with ballistic transport and a band gap set by " +
-            "chirality. I study how tube diameter, contacts and gate geometry decide whether they beat " +
-            "silicon at short channel lengths.",
-      topics: ["Chirality-dependent band gap", "Ballistic and quantum transport",
-               "Contact resistance", "Short-channel scaling"]
+      topics: ["chirality", "ballistic transport", "short-channel scaling"]
     },
     {
       id: "hemt", color: "amber",
       title: "High-electron-mobility transistors",
-      text: "In AlGaN/GaN HEMTs, polarization charge forms a two-dimensional electron gas without doping. " +
-            "I am interested in how barrier design, field plates and self-heating shape current, " +
-            "breakdown and high-frequency behaviour.",
-      topics: ["2DEG and polarization charge", "Breakdown and field plates",
-               "Self-heating", "RF figures of merit"]
+      topics: ["AlGaN/GaN 2DEG", "breakdown", "self-heating", "RF"]
     },
     {
       id: "bio", color: "teal",
       title: "Plasmonic biosensing",
-      text: "Surface plasmon resonance sensors detect disease markers through tiny shifts in refractive index. " +
-            "I design HfO₂-assisted plasmonic architectures and use machine learning to optimize them for " +
-            "sensitive, low-cost cancer screening.",
-      topics: ["Surface plasmon resonance", "HfO₂-assisted sensor layers",
-               "Machine-learning design optimization", "Colorectal cancer detection"]
+      topics: ["SPR", "HfO₂ layers", "ML optimization", "cancer screening"]
     },
     {
       id: "grid", color: "blue",
       title: "Smart-grid optimization",
-      text: "My earlier work used genetic algorithms to schedule residential loads and electric-vehicle " +
-            "charging so that consumers save money without straining the distribution network.",
-      topics: ["Demand-side management", "EV charging scheduling",
-               "Genetic-algorithm optimization", "Residential load modeling"]
+      topics: ["demand-side management", "EV charging", "genetic algorithms"]
     }
   ],
 
@@ -163,10 +135,9 @@ window.SITE = {
   projects: [
     {
       title: "3D model of Cs₂AgBiBr₆ solar cells",
-      kind: "COMSOL Multiphysics · M.Sc. thesis",
+      kind: "COMSOL · M.Sc. thesis",
       status: "published",
-      text: "Three-dimensional opto-electrical and thermal finite-element model of double perovskite " +
-            "solar cells, used for device-level optimization of efficiency.",
+      text: "3D opto-electrical-thermal FEM model for device-level optimization.",
       tags: ["COMSOL", "Perovskite PV", "Finite element"],
       areas: ["pv", "tcad"],
       links: { paper: "https://www.sciencedirect.com/science/article/pii/S0927024826002825", code: "", data: "" }
@@ -175,8 +146,7 @@ window.SITE = {
       title: "Two-stage GA demand-side management",
       kind: "Optimization model",
       status: "published",
-      text: "Genetic-algorithm scheduler that shifts residential loads to cut consumer cost while " +
-            "respecting comfort constraints.",
+      text: "GA scheduler that shifts residential loads to cut cost.",
       tags: ["Genetic algorithm", "Demand-side management"],
       areas: ["grid"],
       links: { paper: "https://ieeexplore.ieee.org/abstract/document/9986733/", code: "", data: "" }
@@ -185,8 +155,7 @@ window.SITE = {
       title: "Network-friendly EV charging",
       kind: "Optimization model",
       status: "published",
-      text: "Genetic-algorithm charging scheme that schedules electric vehicles to reduce stress on " +
-            "the distribution network.",
+      text: "GA charging schedule that eases distribution-network load.",
       tags: ["Genetic algorithm", "Electric vehicles"],
       areas: ["grid"],
       links: { paper: "https://ieeexplore.ieee.org/abstract/document/10010699/", code: "", data: "" }
@@ -197,16 +166,16 @@ window.SITE = {
   experience: [
     {
       start: "Dec 2025", end: "Present",
-      title: "Lecturer (Grade-I), Department of EEE",
-      org: "Ahsanullah University of Science and Technology (AUST)", orgUrl: "https://www.aust.edu", place: "Dhaka, Bangladesh",
-      tags: ["Full-time"],
-      points: ["Previously Lecturer (Grade-II), October 2023 to December 2025."]   // EDIT: add courses you teach, students you supervise
+      title: "Lecturer (Grade-I), EEE",
+      org: "AUST", orgUrl: "https://www.aust.edu", place: "Dhaka",
+      tags: [],
+      points: ["Grade-II, Oct 2023 – Dec 2025."]   // EDIT: add courses you teach, students you supervise
     },
     {
       start: "Oct 2022", end: "Oct 2023",
-      title: "Lecturer, Department of EEE",
-      org: "Southeast University", orgUrl: "", place: "Dhaka, Bangladesh",
-      tags: ["Full-time"],
+      title: "Lecturer, EEE",
+      org: "Southeast University", orgUrl: "", place: "Dhaka",
+      tags: [],
       points: []                                                                    // EDIT: add what you did here
     }
   ],
@@ -215,17 +184,17 @@ window.SITE = {
   education: [
     {
       start: "2023", end: "2026",
-      title: "M.Sc. in Electrical and Electronic Engineering",
-      org: "Ahsanullah University of Science and Technology (AUST)", orgUrl: "https://www.aust.edu", place: "Dhaka, Bangladesh",
-      tags: ["CGPA 4.00 / 4.00"],
-      points: ["Thesis: 3D opto-electrical and thermal modeling of double perovskite solar cells in COMSOL Multiphysics, published in Solar Energy Materials and Solar Cells."]
+      title: "M.Sc. in EEE",
+      org: "AUST", orgUrl: "https://www.aust.edu", place: "Dhaka",
+      tags: ["CGPA 4.00/4"],
+      points: ["Thesis: 3D modeling of double perovskite solar cells in COMSOL."]
     },
     {
       start: "2017", end: "2022",
-      title: "B.Sc. in Electrical and Electronic Engineering",
-      org: "Ahsanullah University of Science and Technology (AUST)", orgUrl: "https://www.aust.edu", place: "Dhaka, Bangladesh",
-      tags: ["CGPA 3.932 / 4.00"],
-      points: ["Research on genetic-algorithm demand-side management and EV charging, published as two first-author IEEE conference papers."]
+      title: "B.Sc. in EEE",
+      org: "AUST", orgUrl: "https://www.aust.edu", place: "Dhaka",
+      tags: ["CGPA 3.932/4"],
+      points: ["Thesis: GA-based demand-side management and EV charging."]
     }
   ],
 
@@ -234,7 +203,7 @@ window.SITE = {
   skills: [
     { group: "Device simulation", items: ["COMSOL Multiphysics", "Silvaco TCAD", "Sentaurus TCAD", "SCAPS-1D"] },
     { group: "First-principles", items: ["Quantum ESPRESSO", "VASP", "VESTA"] },
-    { group: "Programming and analysis", items: ["MATLAB", "Python", "Origin", "LaTeX"] }
+    { group: "Programming", items: ["MATLAB", "Python", "Origin", "LaTeX"] }
   ],
 
   /* ---------------- Teaching and talks (set to [] to hide) ---------------- */

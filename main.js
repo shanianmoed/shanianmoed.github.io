@@ -82,9 +82,9 @@
     if (np) bits.push(`${np} paper${np > 1 ? "s" : ""}`);
     if (nj) bits.push(`${nj} project${nj > 1 ? "s" : ""}`);
     return `<article class="area c-${esc(a.color)}">
-      <div><h3>${esc(a.title)}</h3>${bits.length ? `<p class="count">${bits.join(" · ")}</p>` : ""}</div>
-      <p>${esc(a.text)}</p>
-      <ul>${(a.topics || []).map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+      <h3>${esc(a.title)}</h3>
+      <p>${(a.topics || []).map(esc).join(" · ")}</p>
+      <span class="count">${bits.join(" · ")}</span>
     </article>`;
   }).join("");
 
@@ -151,11 +151,9 @@
     const first = (p.areas || [])[0];
     const links = PLINKS.filter(([k]) => has(p.links?.[k])).map(([k, l]) => `<a class="linkbtn" href="${esc(p.links[k])}" target="_blank" rel="noopener">${l}</a>`).join("");
     return `<article class="card ${first ? colorOf(first) : ""}">
-      <div class="card-head"><div><h3>${esc(p.title)}</h3><p class="kind">${esc(p.kind)}</p></div>
-      ${has(p.status) ? `<span class="pill ${esc(p.status)}">${STATUS_LABEL[p.status] || esc(p.status)}</span>` : ""}</div>
+      <div><h3>${esc(p.title)}</h3><p class="kind">${esc(p.kind)}</p></div>
       <p>${esc(p.text)}</p>
-      <div class="row-wrap">${(p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-      ${links ? `<div class="row-wrap">${links}</div>` : ""}
+      <div class="row-wrap">${links}</div>
     </article>`;
   }).join("");
 
@@ -164,11 +162,10 @@
     return (items || []).map((x) => {
       const now = /present/i.test(x.end);
       return `<article class="tl">
-        <div class="tl-date"><b>${esc(x.start)}</b><span class="${now ? "now" : ""}">${now ? "● Present" : "to " + esc(x.end)}</span></div>
+        <div class="tl-date"><b>${esc(x.start)}</b><span class="${now ? "now" : ""}">${now ? "→ now" : "→ " + esc(x.end)}</span></div>
         <div>
           <h3>${esc(x.title)}</h3>
-          <p class="org">${has(x.orgUrl) && x.orgUrl !== "#" ? `<a href="${esc(x.orgUrl)}" target="_blank" rel="noopener">${esc(x.org)}</a>` : `<span style="color:var(--ok)">${esc(x.org)}</span>`}${has(x.place) ? " · " + esc(x.place) : ""}</p>
-          ${(x.tags || []).length ? `<div class="row-wrap">${x.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>` : ""}
+          <p class="org">${has(x.orgUrl) && x.orgUrl !== "#" ? `<a href="${esc(x.orgUrl)}" target="_blank" rel="noopener">${esc(x.org)}</a>` : `<span>${esc(x.org)}</span>`}${(x.tags || []).length ? ` <span class="meta">· ${x.tags.map(esc).join(" · ")}</span>` : ""}</p>
           ${(x.points || []).length ? `<ul>${x.points.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
         </div>
       </article>`;
@@ -181,7 +178,7 @@
   /* ---------- skills ---------- */
   if (!(S.skills || []).length) $("#skills").hidden = true;
   $("#skillGroups").innerHTML = (S.skills || []).map((g) =>
-    `<div class="skill"><h3>${esc(g.group)}</h3><div class="row-wrap">${g.items.map((i) => `<span class="tag">${esc(i)}</span>`).join("")}</div></div>`).join("");
+    `<div class="skill"><h3>${esc(g.group)}</h3><p>${g.items.map(esc).join(" · ")}</p></div>`).join("");
 
   /* ---------- teaching ---------- */
   if (!(S.teaching || []).length) $("#teaching").hidden = true;
@@ -220,7 +217,7 @@
               <text x="${x + bw / 2}" y="${H - 6}" text-anchor="middle" font-size="11" fill="var(--muted)">${c.year}</text>`;
     }).join("");
     const total = cites.reduce((s, c) => s + c.count, 0);
-    panel.innerHTML = `<div class="panel-head"><h3>Citations per year</h3><span>${total} total · Google Scholar</span></div>
+    panel.innerHTML = `<div class="panel-head"><h3>citations / year</h3><span>total ${total} · Scholar</span></div>
       <div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Citations per year bar chart">
         <line x1="${pad}" x2="${W - pad}" y1="${H - 24}" y2="${H - 24}" stroke="var(--rule)"/>${bars}</svg></div>`;
   } else {
