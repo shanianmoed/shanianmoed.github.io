@@ -97,7 +97,7 @@
     let authors = esc(p.authors);
     if (has(S.me)) authors = authors.split(esc(S.me)).join(`<b>${esc(S.me)}</b>`);
     const pre = p.status === "review" ? "Submitted to " : "";
-    const venue = `${pre}<i>${esc(p.venue)}</i>${has(p.publisher) ? " · " + esc(p.publisher) : ""}${p.year ? " · " + esc(p.year) : ""}`;
+    const venue = !has(p.venue) ? `Manuscript under review${p.year ? " · " + esc(p.year) : ""}` : `${pre}<i>${esc(p.venue)}</i>${has(p.publisher) ? " · " + esc(p.publisher) : ""}${p.year ? " · " + esc(p.year) : ""}`;
     const first = (p.areas || [])[0];
     const tags = [
       `<span class="pill ${esc(p.status)}">${STATUS_LABEL[p.status] || esc(p.status)}</span>`,

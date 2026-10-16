@@ -17,6 +17,7 @@
   --green: #6CCB8E;
   --rose: #EC809E;
   --blue: #7FA6F5;
+  --teal: #4FD1B5;
 
   --ok: #6CCB8E;
   --wait: #EC809E;
@@ -47,6 +48,7 @@
   --green: #23824A;
   --rose: #C03A63;
   --blue: #2F5FC4;
+  --teal: #0F7F6A;
 
   --ok: #23824A;
   --wait: #C03A63;
@@ -58,7 +60,7 @@
     --bg: #F5F6F8; --bg-2: #EEF0F4; --surface: #FFFFFF; --surface-2: #F3F5F8;
     --ink: #141A22; --muted: #56616E; --faint: #7D8794; --rule: #DCE1E7;
     --accent: #5B48C9; --accent-ink: #FFFFFF;
-    --violet: #6A57D6; --cyan: #127C98; --amber: #A86B00; --green: #23824A; --rose: #C03A63; --blue: #2F5FC4;
+    --violet: #6A57D6; --cyan: #127C98; --amber: #A86B00; --green: #23824A; --rose: #C03A63; --blue: #2F5FC4; --teal: #0F7F6A;
     --ok: #23824A; --wait: #C03A63; --pre: #127C98;
     color-scheme: light;
   }
@@ -137,7 +139,7 @@ p { margin: 0; }
 
 /* area colour helper */
 .c-violet { --c: var(--violet); } .c-cyan { --c: var(--cyan); } .c-amber { --c: var(--amber); }
-.c-green { --c: var(--green); } .c-rose { --c: var(--rose); } .c-blue { --c: var(--blue); }
+.c-green { --c: var(--green); } .c-rose { --c: var(--rose); } .c-blue { --c: var(--blue); } .c-teal { --c: var(--teal); }
 
 /* ============ Hero ============ */
 .hero { padding: clamp(40px, 7vw, 80px) 0 40px; }

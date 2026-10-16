@@ -99,6 +99,15 @@ window.SITE = {
                "Self-heating", "RF figures of merit"]
     },
     {
+      id: "bio", color: "teal",
+      title: "Plasmonic biosensing",
+      text: "Surface plasmon resonance sensors detect disease markers through tiny shifts in refractive index. " +
+            "I design HfO₂-assisted plasmonic architectures and use machine learning to optimize them for " +
+            "sensitive, low-cost cancer screening.",
+      topics: ["Surface plasmon resonance", "HfO₂-assisted sensor layers",
+               "Machine-learning design optimization", "Colorectal cancer detection"]
+    },
+    {
       id: "grid", color: "blue",
       title: "Smart-grid optimization",
       text: "My earlier work used genetic algorithms to schedule residential loads and electric-vehicle " +
@@ -112,6 +121,14 @@ window.SITE = {
      status: "published", "review", "accepted" or "preprint" */
   me: "Moed, M. S.",
   publications: [
+    {
+      title: "Reinventing plasmonic biosensing: Novel machine learning optimization of HfO₂-assisted architectures for colorectal cancer screening",
+      authors: "Moed, M. S.; et al.",          // EDIT: full author list
+      venue: "Electron", publisher: "", year: 2026,
+      status: "review", type: "Journal", rank: "",
+      areas: ["bio"], selected: true,
+      links: { doi: "", preprint: "", code: "", data: "", bibtex: "" }
+    },
     {
       title: "Three-dimensional finite-element-based coupled optical-electrical modeling of Cs₂AgBiBr₆ double perovskite solar cells: Device-level optimization for enhanced efficiency",
       authors: "Moed, M. S.; Siddiquee, A. A.; Kashem, M. T. B.",
