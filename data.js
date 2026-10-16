@@ -25,7 +25,7 @@ window.SITE = {
   status: "Seeking funded PhD opportunities",
 
   cv: "cv.pdf",                                // put your CV in the repo as cv.pdf
-  email: "you@example.com",                    // EDIT: your email
+  email: "shanian.aca@gmail.com",
   links: {                                     // leave "" to hide a button
     scholar: "https://scholar.google.com/citations?user=WgNzwxEAAAAJ&hl=en",
     orcid: "",
@@ -40,7 +40,7 @@ window.SITE = {
     { value: "auto:published", label: "Peer-reviewed papers" },
     { value: "9",              label: "Citations on Google Scholar" },
     { value: "2",              label: "h-index" },
-    { value: "auto:areas",     label: "Research areas" }
+    { value: "auto:areas",     label: "Research interests" }
   ],
 
   /* Citations per year (Google Scholar). Update now and then. */

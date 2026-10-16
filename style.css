@@ -177,7 +177,7 @@ p { margin: 0; }
 .legend { display: flex; gap: 14px; align-items: center; }
 .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
 .chart { padding: 8px 18px 10px; }
-.chart svg { width: 100%; height: 135px; display: block; }
+.chart svg { width: 100%; height: auto; max-height: 150px; display: block; }
 
 /* ============ Stats ============ */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); margin-top: 8px; }
@@ -321,17 +321,13 @@ p { margin: 0; }
   .brand-sub { display: none; }
 }
 
-/* Research visual tiles under the citations chart */
-.visuals { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.tile { margin: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-.tile-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; padding: 8px 10px 2px; }
-.tile-head h3 { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
-.tile-head > span { font-size: 0.66rem; color: var(--muted); white-space: nowrap; }
-.tile .legend { gap: 6px; font-size: 0.66rem; color: var(--muted); }
-.tile canvas { display: block; width: 100%; height: 100px; cursor: crosshair; touch-action: pan-y; }
-.tile-media { height: 100px; display: grid; place-items: center; padding: 2px 6px; }
-.tile-media svg { width: 100%; height: 100%; }
-.tile-media a { display: block; width: 100%; height: 100%; }
-.tile-media img { width: 100%; height: 100%; object-fit: contain; }
-.tile figcaption { display: none; border-top: 1px solid var(--rule); padding: 9px 14px; font-size: 0.75rem; color: var(--muted); margin-top: auto; }
-@media (max-width: 480px) { .tile canvas, .tile-media { height: 90px; } }
+/* Back to top */
+.to-top { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); text-decoration: none; font-size: 0.82rem; padding: 7px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
+.to-top:hover { border-color: var(--accent); color: var(--accent); }
+.foot { align-items: center; }
+
+/* Larger portrait in the hero */
+.who { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 22px; }
+.avatar { width: 220px; height: 220px; border-radius: 18px; font-size: 3.6rem; border-width: 1px; }
+.who-place { font-size: 1rem; }
+@media (max-width: 820px) { .avatar { width: 180px; height: 180px; } }

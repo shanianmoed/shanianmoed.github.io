@@ -227,67 +227,6 @@
     panel.hidden = true;
   }
 
-  // Two visual tiles under the chart: MoS2 lattice and CNTFET
-  const V = S.visuals || {};
-  const tiles = document.createElement("div");
-  tiles.className = "visuals";
-  const cnt = V.cntfet || {};
-  const cntBody = has(cnt.image)
-    ? `<a href="${esc(cnt.image)}" target="_blank" rel="noopener"><img src="${esc(cnt.image)}" alt="${esc(cnt.caption || "COMSOL CNTFET simulation")}"></a>`
-    : cntfetSVG();
-  tiles.innerHTML = `
-    <figure class="tile">
-      <div class="tile-head"><h3>MoS₂ monolayer</h3>
-        <span class="legend"><span><i style="background:var(--violet)"></i>Mo</span><span><i style="background:var(--amber)"></i>S</span></span></div>
-      <canvas id="lattice" role="img" aria-label="Interactive honeycomb lattice of monolayer MoS2"></canvas>
-      <figcaption>${esc((V.mos2 && V.mos2.caption) || "Top view. Move over it to excite the lattice.")}</figcaption>
-    </figure>
-    <figure class="tile">
-      <div class="tile-head"><h3>${esc(cnt.title || "CNTFET")}</h3><span>${has(cnt.image) ? "Simulation" : "Potential (V)"}</span></div>
-      <div class="tile-media">${cntBody}</div>
-      <figcaption>${esc(cnt.caption || "Gate-all-around CNTFET with electric potential along the channel.")}</figcaption>
-    </figure>`;
-  panel.after(tiles);
-  lattice($("#lattice"));
-
-  function cntfetSVG() {
-    // COMSOL-style rainbow colour map for the potential along the tube
-    const stops = ["#1f2bd1", "#1b8fe8", "#20d4c9", "#6be35a", "#f2e33a", "#f59a23", "#e0321f"];
-    const grad = stops.map((c, i) => `<stop offset="${(i / (stops.length - 1)) * 100}%" stop-color="${c}"/>`).join("");
-    let hex = "";
-    for (let x = 64; x < 236; x += 10) hex += `<path d="M${x} 82 l5 6 l-5 6 M${x + 5} 88 h5" />`;
-    return `<svg viewBox="6 24 290 126" role="img" aria-label="Illustration of a gate-all-around carbon nanotube field-effect transistor coloured by electric potential">
-      <defs>
-        <linearGradient id="pot" x1="0" x2="1">${grad}</linearGradient>
-        <linearGradient id="tubeShade" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
-          <stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
-        <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stop-color="#c9ced6"/><stop offset="1" stop-color="#7c8592"/></linearGradient>
-        <linearGradient id="gateM" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stop-color="#e7c98a"/><stop offset="1" stop-color="#a57f35"/></linearGradient>
-      </defs>
-      <rect x="8" y="128" width="262" height="18" rx="2" fill="var(--surface-2)" stroke="var(--rule)"/>
-      <text x="139" y="142" text-anchor="middle" font-size="12" fill="var(--muted)">SiO₂</text>
-      <rect x="18" y="58" width="46" height="70" rx="3" fill="url(#metal)"/>
-      <rect x="214" y="58" width="46" height="70" rx="3" fill="url(#metal)"/>
-      <text x="41" y="52" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)">S</text>
-      <text x="237" y="52" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)">D</text>
-      <rect x="60" y="78" width="158" height="20" rx="10" fill="url(#pot)"/>
-      <g stroke="#fff" stroke-opacity=".28" stroke-width=".7" fill="none">${hex}</g>
-      <rect x="60" y="78" width="158" height="20" rx="10" fill="url(#tubeShade)"/>
-      <rect x="104" y="68" width="70" height="40" rx="12" fill="#9fd3ff" fill-opacity=".18" stroke="#9fd3ff" stroke-opacity=".5"/>
-      <rect x="110" y="60" width="58" height="56" rx="14" fill="url(#gateM)" fill-opacity=".55" stroke="#e7c98a" stroke-opacity=".9"/>
-      <rect x="110" y="60" width="58" height="56" rx="14" fill="none" stroke="#fff" stroke-opacity=".25"/>
-      <text x="139" y="40" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)">G</text>
-      <line x1="139" y1="45" x2="139" y2="58" stroke="var(--faint)" stroke-dasharray="2 2"/>
-      <rect x="278" y="40" width="8" height="90" rx="2" fill="url(#potV)"/>
-      <defs><linearGradient id="potV" x1="0" x2="0" y1="1" y2="0">${grad}</linearGradient></defs>
-      <text x="282" y="36" text-anchor="middle" font-size="11" fill="var(--muted)">0.5</text>
-      <text x="282" y="141" text-anchor="middle" font-size="11" fill="var(--muted)">0</text>
-    </svg>`;
-  }
-
   /* ---------- theme toggle ---------- */
   const themeBtn = $("#themeBtn");
   const modes = ["auto", "light", "dark"];
@@ -295,7 +234,7 @@
   function applyTheme() {
     if (mode === "auto") delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = mode;
     try { mode === "auto" ? localStorage.removeItem("theme") : localStorage.setItem("theme", mode); } catch (e) {}
-    themeBtn.innerHTML = ICON[mode];
+    themeBtn.innerHTML = ICON[{ auto: "auto", light: "sun", dark: "moon" }[mode]];
     themeBtn.setAttribute("aria-label", `Colour theme: ${mode === "auto" ? "match system" : mode}. Click to change.`);
     themeBtn.title = mode === "auto" ? "Theme: system" : "Theme: " + mode;
     window.dispatchEvent(new Event("themechange"));
